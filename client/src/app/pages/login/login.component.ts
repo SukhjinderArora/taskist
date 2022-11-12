@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
           this.authService.verifyGoogleSignIn(credential);
         },
         ux_mode: 'popup',
-        context: 'signup',
+        context: 'signin',
       });
       google.accounts.id.renderButton(
         document.getElementById('googleBtn') as HTMLElement,

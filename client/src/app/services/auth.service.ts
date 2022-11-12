@@ -40,7 +40,7 @@ export class AuthService {
   }
 
   isLoggedIn() {
-    return dayjs().isBefore(this.authUser?.expiresAt);
+    return dayjs().isBefore(this.authUser?.expiresAt || null);
   }
 
   logOut() {
