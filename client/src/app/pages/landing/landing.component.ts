@@ -12,8 +12,9 @@ export class LandingComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    if (this.authService.isAuthenticated) {
+    if (this.authService.authUser) {
       this.router.navigate(['/home']);
+      return;
     }
   }
 }

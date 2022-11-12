@@ -1,7 +1,7 @@
 <nav class="mat-elevation-z3">
   <mat-toolbar color="primary" class="navbar">
     <a routerLink="/" mat-button class="brand">Taskist</a>
-    <div class="btn-group">
+    <div class="btn-group" *ngIf="!this.authService.authUser">
       <a routerLink="/login" mat-button class="nav-button">Login</a>
       <a
         routerLink="/signup"
@@ -10,6 +10,11 @@
         class="nav-button"
         >Get Started</a
       >
+    </div>
+    <div class="btn-group" *ngIf="this.authService.authUser">
+      <button mat-button class="nav-button" (click)="onLogout()">
+        Log out
+      </button>
     </div>
   </mat-toolbar>
 </nav>

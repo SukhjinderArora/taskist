@@ -20,8 +20,9 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.authService.isAuthenticated) {
+    if (this.authService.isLoggedIn()) {
       this.router.navigate(['/home']);
+      return;
     }
 
     // Load the Google Identity Services script and display the the Google sign-in button
@@ -34,7 +35,7 @@ export class LoginComponent implements OnInit {
         client_id:
           '560815842329-hvoumt6mkor2qv549qj7kc259godonqv.apps.googleusercontent.com',
         callback: ({ credential }) => {
-          console.log(credential);
+          this.authService.verifyGoogleSignIn(credential);
         },
         ux_mode: 'popup',
         context: 'signup',
