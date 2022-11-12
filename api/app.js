@@ -6,6 +6,7 @@ const { NODE_ENV } = require("./utils/config");
 const { errorLogger, errorResponder } = require("./middlewares/error-handler");
 
 const authRoutes = require("./routes/auth");
+const tasksRouter = require("./routes/tasks");
 
 const app = express();
 
@@ -23,6 +24,7 @@ if (isDevEnv) {
 app.use(express.json({ type: "application/json" }));
 
 app.use("/api/auth", authRoutes);
+app.use("/api/tasks", tasksRouter);
 
 app.use((req, res, next) => {
   next(createError.NotFound());

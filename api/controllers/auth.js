@@ -24,13 +24,14 @@ const signinGoogle = async (req, res, next) => {
       return next();
     }
     const { name, email, sub: googleId } = payload;
-    const user = await knex("users").insert({
-      name,
-      email,
-      google_id: googleId,
-    });
-    console.log(user);
-    req.userId = user.id;
+    const user = await knex("users")
+      .insert({
+        name,
+        email,
+        google_id: googleId,
+      })
+      .returning("*");
+    req.userId = user[0].id;
     return next();
   } catch (error) {
     return next(error);
