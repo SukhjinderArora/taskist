@@ -5,7 +5,7 @@
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: inherit;
+  font-family: "Source Sans Pro", "Helvetica Neue", sans-serif !important;
   padding: 0;
   margin: 0;
 }
@@ -17,5 +17,5 @@ body {
 
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: "Source Sans Pro", "Helvetica Neue", sans-serif !important;
 }

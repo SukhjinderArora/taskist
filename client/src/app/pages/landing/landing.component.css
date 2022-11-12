@@ -1,0 +1,26 @@
+.hero-container {
+  padding-top: 60px;
+  height: calc(100vh - 64px);
+  background-image: url("../../../assets/images/todo.svg");
+  background-repeat: no-repeat;
+  background-size: 35% 50%;
+  background-position: bottom center;
+}
+
+.hero-text {
+  color: rgb(34 34 34);
+  font-size: 48px;
+  font-weight: 500;
+  line-height: 50px;
+  text-align: center;
+}
+
+.cta-container {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.cta-button {
+  font-size: 20px;
+  padding: 8px 22px;
+}
