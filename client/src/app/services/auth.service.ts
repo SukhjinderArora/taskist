@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 

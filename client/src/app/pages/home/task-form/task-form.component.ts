@@ -1,5 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  FormGroupDirective,
+  Validators,
+} from '@angular/forms';
+
+import { TasksService } from 'src/app/services/tasks.service';
 
 @Component({
   selector: 'app-task-form',
@@ -8,21 +15,27 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class TaskFormComponent implements OnInit {
   taskForm: FormGroup;
+  @ViewChild(FormGroupDirective) formDirective: FormGroupDirective;
 
-  constructor() {}
+  constructor(private tasksService: TasksService) {}
 
   ngOnInit(): void {
     this.taskForm = new FormGroup({
       title: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
-      startDate: new FormControl(new Date()),
+      startDate: new FormControl(new Date(), [Validators.required]),
     });
   }
 
   onSubmit(form: FormGroup) {
-    console.log('Valid?', form.valid); // true or false
-    console.log('Title', form.value.title);
-    console.log('Description', form.value.description);
-    console.log('Start Date', new Date(form.value.startDate).toISOString());
+    if (form.valid) {
+      this.tasksService.createNewTask(
+        form.value.title,
+        form.value.description,
+        form.value.startDate
+      );
+      form.reset();
+      this.formDirective.resetForm();
+    }
   }
 }

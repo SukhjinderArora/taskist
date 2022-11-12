@@ -3,11 +3,7 @@
     <a routerLink="/" mat-button class="brand">Taskist</a>
     <div class="btn-group" *ngIf="!this.authService.authUser">
       <a routerLink="/login" mat-button class="nav-button">Login</a>
-      <a
-        routerLink="/signup"
-        mat-raised-button
-        color="accent"
-        class="nav-button"
+      <a routerLink="/login" mat-raised-button color="accent" class="nav-button"
         >Get Started</a
       >
     </div>

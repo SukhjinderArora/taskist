@@ -1,0 +1,13 @@
+<div class="task-list">
+  <div>
+    <h2 class="mat-title" *ngIf="tasksService.tasks.length > 0">Your Tasks</h2>
+  </div>
+  <div *ngFor="let task of tasksService.tasks$ | async" class="task">
+    <p class="task-title">{{ task.title }}</p>
+    <p class="task-description">{{ task.description }}</p>
+    <div class="date-container">
+      <mat-icon>calendar_month</mat-icon>
+      <span>{{ task.start_at | date }}</span>
+    </div>
+  </div>
+</div>
