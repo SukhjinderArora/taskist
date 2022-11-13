@@ -26,30 +26,25 @@ export class HeaderComponent implements OnInit {
 
   private loadGoogleClientSDK() {
     // Load the Google Identity Services script used to authorize the application to access the user's Google calendar.
-    this.scriptService
-      .loadScript(this.renderer, 'https://accounts.google.com/gsi/client')
-      .then(() => {
-        console.log('script loaded');
-        this.googleAuthClient = google.accounts.oauth2.initCodeClient({
-          client_id:
-            '560815842329-hvoumt6mkor2qv549qj7kc259godonqv.apps.googleusercontent.com',
-          scope: 'https://www.googleapis.com/auth/calendar.app.created',
-          ux_mode: 'popup',
-          callback: (response) => {
-            console.log(response);
-            this.httpService
-              .verifyAuthCode(response.code)
-              .subscribe((data) => console.log(data));
-          },
-        });
-      })
-      .catch((error) => console.log(error));
-    // scriptElement.onload = () => {
+    const script = this.scriptService.loadScript(
+      this.renderer,
+      'https://accounts.google.com/gsi/client'
+    );
 
-    // };
-    // scriptElement.onerror = () => {
-    //   console.log('Could not load the Google Script!');
-    // };
+    script.onload = () => {
+      this.googleAuthClient = google.accounts.oauth2.initCodeClient({
+        client_id:
+          '560815842329-hvoumt6mkor2qv549qj7kc259godonqv.apps.googleusercontent.com',
+        scope: 'https://www.googleapis.com/auth/calendar.app.created',
+        ux_mode: 'popup',
+        callback: (response) => {
+          console.log(response);
+          this.httpService
+            .verifyAuthCode(response.code)
+            .subscribe((data) => console.log(data));
+        },
+      });
+    };
   }
 
   onClickOpenAuthWindow() {

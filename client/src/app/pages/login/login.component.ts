@@ -26,55 +26,32 @@ export class LoginComponent implements OnInit {
     }
 
     // Load the Google Identity Services script and display the the Google sign-in button
-    this.scriptService
-      .loadScript(this.renderer, 'https://accounts.google.com/gsi/client')
-      .then(() => {
-        google.accounts.id.initialize({
-          client_id:
-            '560815842329-hvoumt6mkor2qv549qj7kc259godonqv.apps.googleusercontent.com',
-          callback: ({ credential }) => {
-            this.authService.verifyGoogleSignIn(credential);
-          },
-          ux_mode: 'popup',
-          context: 'signin',
-        });
-        google.accounts.id.renderButton(
-          document.getElementById('googleBtn') as HTMLElement,
-          {
-            size: 'large',
-            type: 'standard',
-            shape: 'rectangular',
-            theme: 'outline',
-            text: 'signin_with',
-            logo_alignment: 'left',
-          }
-        );
-      })
-      .catch((error) => console.log(error));
-    // scriptElement.onload = () => {
-    //   google.accounts.id.initialize({
-    //     client_id:
-    //       '560815842329-hvoumt6mkor2qv549qj7kc259godonqv.apps.googleusercontent.com',
-    //     callback: ({ credential }) => {
-    //       this.authService.verifyGoogleSignIn(credential);
-    //     },
-    //     ux_mode: 'popup',
-    //     context: 'signin',
-    //   });
-    //   google.accounts.id.renderButton(
-    //     document.getElementById('googleBtn') as HTMLElement,
-    //     {
-    //       size: 'large',
-    //       type: 'standard',
-    //       shape: 'rectangular',
-    //       theme: 'outline',
-    //       text: 'signin_with',
-    //       logo_alignment: 'left',
-    //     }
-    //   );
-    // };
-    // scriptElement.onerror = () => {
-    //   console.log('Could not load the Google Script!');
-    // };
+    const script = this.scriptService.loadScript(
+      this.renderer,
+      'https://accounts.google.com/gsi/client'
+    );
+
+    script.onload = () => {
+      google.accounts.id.initialize({
+        client_id:
+          '560815842329-hvoumt6mkor2qv549qj7kc259godonqv.apps.googleusercontent.com',
+        callback: ({ credential }) => {
+          this.authService.verifyGoogleSignIn(credential);
+        },
+        ux_mode: 'popup',
+        context: 'signin',
+      });
+      google.accounts.id.renderButton(
+        document.getElementById('googleBtn') as HTMLElement,
+        {
+          size: 'large',
+          type: 'standard',
+          shape: 'rectangular',
+          theme: 'outline',
+          text: 'signin_with',
+          logo_alignment: 'left',
+        }
+      );
+    };
   }
 }

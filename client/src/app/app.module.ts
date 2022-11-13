@@ -16,7 +16,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { LandingComponent } from './pages/landing/landing.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
-import { SignupComponent } from './pages/signup/signup.component';
 import { TaskFormComponent } from './pages/home/task-form/task-form.component';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { TasksComponent } from './pages/home/tasks/tasks.component';
@@ -31,7 +30,6 @@ import { CalendarHeaderComponent } from './pages/home/tasks-calender/calendar-he
     LandingComponent,
     HomeComponent,
     LoginComponent,
-    SignupComponent,
     TaskFormComponent,
     TasksComponent,
     TasksCalenderComponent,

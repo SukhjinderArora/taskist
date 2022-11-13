@@ -34,7 +34,6 @@ export class TasksService {
     const tasksObservable = this.http.get<Task[]>('/api/tasks/all');
     tasksObservable.subscribe((tasks) => {
       this.tasks = tasks;
-      console.log(tasks);
     });
     return tasksObservable;
   }
