@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
+    "seed": "knex migrate:latest",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Sukhjinder Arora",
