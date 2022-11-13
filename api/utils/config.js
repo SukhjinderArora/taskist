@@ -1,8 +1,10 @@
 require("dotenv").config();
 
+const NODE_ENV = "production";
+
 const {
   DATABASE_URL,
-  NODE_ENV,
+  // NODE_ENV,
   PORT,
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,

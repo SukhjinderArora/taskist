@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const createError = require("http-errors");
@@ -23,8 +24,18 @@ if (isDevEnv) {
 
 app.use(express.json({ type: "application/json" }));
 
+if (!isDevEnv) {
+  app.use(express.static(path.join(__dirname, "public", "client")));
+}
+
 app.use("/api/auth", authRoutes);
 app.use("/api/tasks", tasksRouter);
+
+if (!isDevEnv) {
+  app.get("/*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "public", "client", "index.html"));
+  });
+}
 
 app.use((req, res, next) => {
   next(createError.NotFound());
