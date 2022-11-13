@@ -8,6 +8,7 @@ const {
   GOOGLE_CLIENT_SECRET,
   ACCESS_TOKEN_SECRET,
   ACCESS_TOKEN_LIFE,
+  REDIRECT_URI,
 } = process.env;
 
 module.exports = {
@@ -18,4 +19,5 @@ module.exports = {
   GOOGLE_CLIENT_SECRET,
   ACCESS_TOKEN_SECRET,
   ACCESS_TOKEN_LIFE,
+  REDIRECT_URI,
 };
