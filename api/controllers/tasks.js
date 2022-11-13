@@ -36,9 +36,11 @@ const addNewTask = async (req, res, next) => {
 const getAllTasks = async (req, res, next) => {
   const { userId } = req;
   try {
-    const tasks = await knex("tasks").where({
-      user_id: userId,
-    });
+    const tasks = await knex("tasks")
+      .where({
+        user_id: userId,
+      })
+      .orderBy("start_at", "asc");
     return res.status(200).json(tasks);
   } catch (error) {
     return next(error);

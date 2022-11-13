@@ -9,4 +9,10 @@ router.post(
   authMiddlewares.generateToken
 );
 
+router.post(
+  "/verify-auth-code",
+  authMiddlewares.isAuthenticated,
+  authController.verifyAuthCode
+);
+
 module.exports = router;
