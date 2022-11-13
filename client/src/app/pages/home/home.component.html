@@ -2,8 +2,26 @@
   <div class="task-list">
     <div>
       <app-task-form></app-task-form>
-      <app-tasks></app-tasks>
-      <app-tasks-calender></app-tasks-calender>
+      <mat-tab-group>
+        <mat-tab label="List View">
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">format_list_bulleted</mat-icon>
+            List View
+          </ng-template>
+          <ng-template matTabContent>
+            <app-tasks></app-tasks>
+          </ng-template>
+        </mat-tab>
+        <mat-tab label="Calender View">
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">event</mat-icon>
+            Calender View
+          </ng-template>
+          <ng-template matTabContent>
+            <app-tasks-calender></app-tasks-calender>
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
     </div>
   </div>
 </section>

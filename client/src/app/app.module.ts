@@ -5,6 +5,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { MaterialModule } from './modules/material.module';
 import { AppRoutingModule } from './modules/app-routing.module';
@@ -42,6 +43,7 @@ import { CalendarHeaderComponent } from './pages/home/tasks-calender/calendar-he
     HttpClientModule,
     ReactiveFormsModule,
     MatIconModule,
+    MatTabsModule,
     MaterialModule,
     AppRoutingModule,
     CalendarModule.forRoot({

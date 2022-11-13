@@ -8,7 +8,14 @@ export class ScriptService {
   constructor(@Inject(DOCUMENT) private document: Document) {}
 
   public loadScript(renderer: Renderer2, src: string): HTMLScriptElement {
-    const script = renderer.createElement('script');
+    let script = <HTMLScriptElement>(
+      this.document.querySelector(`script[src="${src}"]`)
+    );
+    if (script) {
+      script.remove();
+      // return script;
+    }
+    script = renderer.createElement('script');
     script.type = 'text/javascript';
     script.src = src;
     renderer.appendChild(this.document.body, script);

@@ -22,7 +22,7 @@ export class AuthService {
 
   init() {
     const authenticatedUser = JSON.parse(localStorage.getItem('user'));
-    if (authenticatedUser) {
+    if (this.isLoggedIn()) {
       this.authUser = authenticatedUser;
     }
   }
@@ -40,7 +40,8 @@ export class AuthService {
   }
 
   isLoggedIn() {
-    return dayjs().isBefore(this.authUser?.expiresAt || null);
+    const authenticatedUser = JSON.parse(localStorage.getItem('user'));
+    return dayjs().isBefore(authenticatedUser?.expiresAt || null);
   }
 
   logOut() {

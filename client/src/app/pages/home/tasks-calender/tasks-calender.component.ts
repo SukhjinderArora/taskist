@@ -51,13 +51,12 @@ export class TasksCalenderComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchEvents();
-    this.events$.subscribe((d) => console.log(d));
+    // this.events$.subscribe((d) => console.log(d));
   }
 
   fetchEvents(): void {
     this.events$ = this.tasksService.getAllTasks().pipe(
       map((tasks: Task[]) => {
-        console.log(tasks);
         return tasks.map((task: Task) => {
           return {
             title: task.title,

@@ -8,6 +8,15 @@
       >
     </div>
     <div class="btn-group" *ngIf="this.authService.authUser">
+      <button
+        mat-raised-button
+        color="accent"
+        style="display: flex; align-items: center"
+        (click)="onClickOpenAuthWindow()"
+      >
+        <mat-icon>add_circle</mat-icon>
+        <span> Google Calendar </span>
+      </button>
       <button mat-button class="nav-button" (click)="onLogout()">
         Log out
       </button>
