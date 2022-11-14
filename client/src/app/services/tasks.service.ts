@@ -46,7 +46,6 @@ export class TasksService {
         startDate: new Date(date).toISOString(),
       })
       .subscribe((task) => {
-        console.log(task);
         this.addTask(task);
       });
   }
