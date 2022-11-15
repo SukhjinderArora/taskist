@@ -22,6 +22,8 @@
   </mat-form-field>
 
   <div style="text-align: right">
-    <button mat-raised-button color="primary" type="submit">Add Task</button>
+    <button mat-raised-button color="primary" type="submit">
+      {{ editMode ? "Update Task" : "Add Task" }}
+    </button>
   </div>
 </form>

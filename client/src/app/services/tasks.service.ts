@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 import { Task } from '../models/task.model';
 
@@ -8,34 +8,23 @@ import { Task } from '../models/task.model';
   providedIn: 'root',
 })
 export class TasksService {
-  private readonly _tasks = new BehaviorSubject<Task[]>([]);
+  tasksChanged = new Subject<Task[]>();
 
-  readonly tasks$ = this._tasks.asObservable();
+  private tasks: Task[];
 
   constructor(private http: HttpClient) {}
-
-  get tasks(): Task[] {
-    return this._tasks.getValue();
-  }
-
-  private set tasks(val: Task[]) {
-    this._tasks.next(val);
-  }
-
-  addTask(task: Task) {
-    this.tasks = [...this.tasks, { ...task }];
-  }
-
-  removeTask(id: number) {
-    this.tasks = this.tasks.filter((task) => task.id !== id);
-  }
 
   getAllTasks() {
     const tasksObservable = this.http.get<Task[]>('/api/tasks/all');
     tasksObservable.subscribe((tasks) => {
       this.tasks = tasks;
+      this.tasksChanged.next([...this.tasks]);
     });
     return tasksObservable;
+  }
+
+  getTask(taskId: number): Task {
+    return this.tasks.find((task) => task.id === taskId);
   }
 
   createNewTask(title: string, description: string, date: Date) {
@@ -45,8 +34,31 @@ export class TasksService {
         description,
         startDate: new Date(date).toISOString(),
       })
-      .subscribe((task) => {
-        this.addTask(task);
+      .subscribe(() => {
+        this.getAllTasks();
       });
+  }
+
+  updateTask(title: string, description: string, date: Date, taskId: number) {
+    const taskObservable = this.http.put<Task>(`/api/tasks/${taskId}/update`, {
+      title,
+      description,
+      startDate: new Date(date).toISOString(),
+    });
+
+    taskObservable.subscribe(() => {
+      this.getAllTasks();
+    });
+    return taskObservable;
+  }
+
+  deleteTask(taskId: number) {
+    const taskObservable = this.http.delete(`/api/tasks/${taskId}/delete`);
+    taskObservable.subscribe(() => {
+      this.getAllTasks().subscribe(() => {
+        this.getAllTasks();
+      });
+    });
+    return taskObservable;
   }
 }

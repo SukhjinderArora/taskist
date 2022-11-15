@@ -27,3 +27,8 @@ body {
 .material-icons {
   font-family: "Material Icons" !important;
 }
+
+.calendar-edit {
+  display: inline-block;
+  margin-right: 5px;
+}

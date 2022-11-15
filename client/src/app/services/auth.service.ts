@@ -39,6 +39,18 @@ export class AuthService {
       });
   }
 
+  verifyAuthCode(code: string) {
+    return this.http.post(
+      '/api/auth/verify-auth-code',
+      { code },
+      {
+        headers: {
+          'X-Requested-With': 'XmlHttpRequest',
+        },
+      }
+    );
+  }
+
   isLoggedIn() {
     const authenticatedUser = JSON.parse(localStorage.getItem('user'));
     return dayjs().isBefore(authenticatedUser?.expiresAt || null);

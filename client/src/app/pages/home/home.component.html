@@ -1,7 +1,10 @@
 <section>
   <div class="task-list">
     <div>
-      <app-task-form></app-task-form>
+      <app-task-form
+        [taskId]="selectedTaskId"
+        (formSubmitted)="onFormSubmit()"
+      ></app-task-form>
       <mat-tab-group>
         <mat-tab label="List View">
           <ng-template mat-tab-label>
@@ -9,7 +12,7 @@
             List View
           </ng-template>
           <ng-template matTabContent>
-            <app-tasks></app-tasks>
+            <app-tasks (taskSelected)="onTaskSelected($event)"></app-tasks>
           </ng-template>
         </mat-tab>
         <mat-tab label="Calender View">
@@ -18,7 +21,9 @@
             Calender View
           </ng-template>
           <ng-template matTabContent>
-            <app-tasks-calender></app-tasks-calender>
+            <app-tasks-calender
+              (taskSelected)="onTaskSelected($event)"
+            ></app-tasks-calender>
           </ng-template>
         </mat-tab>
       </mat-tab-group>

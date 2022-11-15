@@ -14,6 +14,11 @@
   font-weight: 600;
 }
 
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
 .date-container {
   display: flex;
   align-items: center;

@@ -1,13 +1,31 @@
 <div class="task-list">
   <div>
-    <h2 class="mat-title" *ngIf="tasksService.tasks.length > 0">Your Tasks</h2>
+    <h2 class="mat-title" *ngIf="tasks.length > 0">Your Tasks</h2>
   </div>
-  <div *ngFor="let task of tasksService.tasks$ | async" class="task">
+  <div *ngFor="let task of tasks" class="task">
     <p class="task-title">{{ task.title }}</p>
     <p class="task-description">{{ task.description }}</p>
-    <div class="date-container">
-      <mat-icon>calendar_month</mat-icon>
-      <span>{{ task.start_at | date }}</span>
+    <div class="flex">
+      <div class="date-container">
+        <mat-icon>calendar_month</mat-icon>
+        <span>{{ task.start_at | date }}</span>
+      </div>
+      <div class="flex" style="gap: 5px">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="onEditTask.bind(this, task.id)()"
+        >
+          Edit
+        </button>
+        <button
+          mat-raised-button
+          color="warn"
+          (click)="onDeleteTask.bind(this, task.id)()"
+        >
+          Delete
+        </button>
+      </div>
     </div>
   </div>
 </div>

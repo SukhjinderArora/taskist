@@ -1,6 +1,16 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  OnInit,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { map } from 'rxjs/operators';
-import { CalendarEvent, CalendarView } from 'angular-calendar';
+import {
+  CalendarEvent,
+  CalendarView,
+  CalendarEventAction,
+} from 'angular-calendar';
 import {
   isSameMonth,
   isSameDay,
@@ -47,11 +57,34 @@ export class TasksCalenderComponent implements OnInit {
 
   activeDayIsOpen: boolean = false;
 
+  @Output() taskSelected = new EventEmitter<number>();
+
+  actions: CalendarEventAction[] = [
+    {
+      label:
+        '<span class="calendar-edit" style="display: inline-block; margin-right: 5px;">edit</span>',
+      a11yLabel: 'Edit',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        console.log(event);
+        this.taskSelected.emit(event.meta.task.id);
+      },
+    },
+    {
+      label:
+        '<span class="calendar-edit" style="display: inline-block; margin-right: 5px;">delete</span>',
+      a11yLabel: 'Delete',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        this.tasksService.deleteTask(event.meta.task.id).subscribe(() => {
+          this.fetchEvents();
+        });
+      },
+    },
+  ];
+
   constructor(private tasksService: TasksService) {}
 
   ngOnInit(): void {
     this.fetchEvents();
-    // this.events$.subscribe((d) => console.log(d));
   }
 
   fetchEvents(): void {
@@ -62,6 +95,7 @@ export class TasksCalenderComponent implements OnInit {
             title: task.title,
             start: new Date(task.start_at),
             color: colors.yellow,
+            actions: this.actions,
             allDay: true,
             meta: {
               task,

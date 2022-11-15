@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
         scope: 'https://www.googleapis.com/auth/calendar.app.created',
         ux_mode: 'popup',
         callback: (response) => {
-          this.httpService.verifyAuthCode(response.code).subscribe(() => {});
+          this.authService.verifyAuthCode(response.code).subscribe(() => {});
         },
       });
     };
