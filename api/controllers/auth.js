@@ -68,10 +68,16 @@ const verifyAuthCode = async (req, res, next) => {
       .first();
 
     if (user.calendar_id) {
-      const existingCalendar = await calendar.calendars.get({
-        calendarId: user.calendar_id,
-      });
-      if (existingCalendar) return res.status(200).json({ message: "success" });
+      try {
+        const existingCalendar = await calendar.calendars.get({
+          calendarId: user.calendar_id,
+        });
+        if (existingCalendar) {
+          return res.status(200).json({ message: "success" });
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     // Create a new calendar if the user has not created a calendar before.

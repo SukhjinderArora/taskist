@@ -12,7 +12,7 @@ const generateToken = async (req, res, next) => {
       .where({
         id: req.userId,
       })
-      .select("*")
+      .select("id", "name", "email")
       .first();
 
     if (!user) {
