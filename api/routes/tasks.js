@@ -17,6 +17,11 @@ router.get(
   authMiddlewares.isAuthenticated,
   tasksController.getAllTasks
 );
+router.get(
+  "/sync",
+  authMiddlewares.isAuthenticated,
+  tasksController.syncEventsWithTasks
+);
 router.put(
   "/:taskId/update",
   authMiddlewares.isAuthenticated,

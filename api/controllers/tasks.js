@@ -1,6 +1,9 @@
 const createError = require("http-errors");
+const Joi = require("joi");
+const { google } = require("googleapis");
 
 const knex = require("../db/knex");
+const { oauth2Client, oauthScope } = require("../utils/auth");
 
 const addNewTask = async (req, res, next) => {
   const { title, description, startDate } = req.body;
@@ -82,9 +85,64 @@ const deleteTask = async (req, res, next) => {
   }
 };
 
+const syncEventsWithTasks = async (req, res, next) => {
+  const { taskId, userId } = req;
+  // get the calendar id and oauth refresh token from the database.
+  const user = await knex("users")
+    .where({
+      id: userId,
+    })
+    .select("*")
+    .first();
+
+  const task = await knex("tasks")
+    .where({
+      id: taskId,
+      user_id: userId,
+    })
+    .select("*")
+    .first();
+
+  const { calendar_id, refresh_token } = user;
+
+  // Return if the user has not linked their calendar with the application.
+  if (!calendar_id) {
+    return res.status(200).json({});
+  }
+  // set the credentials to make the request to Google oauth servers
+  oauth2Client.setCredentials({
+    refresh_token: refresh_token,
+    scope: oauthScope,
+  });
+
+  const calendar = google.calendar({ version: "v3", auth: oauth2Client });
+
+  let calendarExist;
+
+  try {
+    calendarExist = await calendar.calendars.get({
+      calendarId: calendar_id,
+    });
+  } catch (error) {
+    console.log("User has deleted the calendar from their Google account");
+    await knex("users")
+      .where({ id: userId })
+      .update({ calendar_id: null, refresh_token: null });
+    return res.status(200).json({});
+  }
+
+  if (calendarExist) {
+    const events = await calendar.events.list({
+      calendarId: calendarExist.data.id,
+    });
+    return res.status(200).json(events);
+  }
+};
+
 module.exports = {
   addNewTask,
   getAllTasks,
   updateTask,
   deleteTask,
+  syncEventsWithTasks,
 };

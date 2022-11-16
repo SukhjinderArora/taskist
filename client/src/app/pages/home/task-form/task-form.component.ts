@@ -27,8 +27,9 @@ export class TaskFormComponent implements OnInit, OnChanges {
   taskForm: FormGroup;
   editMode: boolean = false;
   @Input() taskId: number | null;
+  @Output() taskIdChange = new EventEmitter<number>();
   @Output() formSubmitted = new EventEmitter<void>();
-  @ViewChild(FormGroupDirective) formDirective: FormGroupDirective;
+  @ViewChild('formNg') formNg;
 
   constructor(
     private tasksService: TasksService,
@@ -41,7 +42,6 @@ export class TaskFormComponent implements OnInit, OnChanges {
   }
 
   private renderForm() {
-    console.log('render', this.editMode);
     let title = '';
     let description = '';
     let startDate = new Date();
@@ -63,6 +63,17 @@ export class TaskFormComponent implements OnInit, OnChanges {
     console.log(this.taskId);
     this.editMode = !!this.taskId;
     this.renderForm();
+  }
+
+  cancelAddOrUpdate() {
+    this.editMode = false;
+    this.taskId = null;
+    this.taskIdChange.emit(this.taskId);
+    this.taskForm.reset({
+      title: '',
+      description: '',
+      startDate: new Date(),
+    });
   }
 
   onSubmit(form: FormGroup) {
@@ -91,8 +102,8 @@ export class TaskFormComponent implements OnInit, OnChanges {
             this.tasksService.getAllTasks();
           });
       }
-      form.reset();
-      this.formDirective.resetForm();
+      this.formNg.resetForm();
+      form.reset({ title: '', description: '', startDate: new Date() });
     }
   }
 }

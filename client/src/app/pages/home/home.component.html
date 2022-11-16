@@ -2,7 +2,7 @@
   <div class="task-list">
     <div>
       <app-task-form
-        [taskId]="selectedTaskId"
+        [(taskId)]="selectedTaskId"
         (formSubmitted)="onFormSubmit()"
       ></app-task-form>
       <mat-tab-group>
