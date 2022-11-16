@@ -23,42 +23,34 @@ export class TasksService {
     return tasksObservable;
   }
 
+  getAllTasks_() {
+    return this.http.get<Task[]>('/api/tasks/all').subscribe((tasks) => {
+      this.tasks = tasks;
+      this.tasksChanged.next([...this.tasks]);
+    });
+  }
+
   getTask(taskId: number): Task {
     return this.tasks.find((task) => task.id === taskId);
   }
 
   createNewTask(title: string, description: string, date: Date) {
-    return this.http
-      .post<Task>('/api/tasks/new', {
-        title,
-        description,
-        startDate: new Date(date).toISOString(),
-      })
-      .subscribe(() => {
-        this.getAllTasks();
-      });
-  }
-
-  updateTask(title: string, description: string, date: Date, taskId: number) {
-    const taskObservable = this.http.put<Task>(`/api/tasks/${taskId}/update`, {
+    return this.http.post<Task>('/api/tasks/new', {
       title,
       description,
       startDate: new Date(date).toISOString(),
     });
+  }
 
-    taskObservable.subscribe(() => {
-      this.getAllTasks();
+  updateTask(title: string, description: string, date: Date, taskId: number) {
+    return this.http.put<Task>(`/api/tasks/${taskId}/update`, {
+      title,
+      description,
+      startDate: new Date(date).toISOString(),
     });
-    return taskObservable;
   }
 
   deleteTask(taskId: number) {
-    const taskObservable = this.http.delete(`/api/tasks/${taskId}/delete`);
-    taskObservable.subscribe(() => {
-      this.getAllTasks().subscribe(() => {
-        this.getAllTasks();
-      });
-    });
-    return taskObservable;
+    return this.http.delete(`/api/tasks/${taskId}/delete`);
   }
 }

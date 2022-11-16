@@ -4,6 +4,7 @@ import {
   OnInit,
   Output,
   EventEmitter,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { map } from 'rxjs/operators';
 import {
@@ -26,6 +27,7 @@ import { Observable } from 'rxjs';
 import { TasksService } from 'src/app/services/tasks.service';
 
 import { Task } from '../../../models/task.model';
+import { WindowRef } from 'src/app/services/window.service';
 
 const colors: any = {
   red: {
@@ -67,6 +69,8 @@ export class TasksCalenderComponent implements OnInit {
       onClick: ({ event }: { event: CalendarEvent }): void => {
         console.log(event);
         this.taskSelected.emit(event.meta.task.id);
+        this.windowRef.nativeWindow.scrollTo(0, 0);
+        this.activeDayIsOpen = false;
       },
     },
     {
@@ -75,16 +79,36 @@ export class TasksCalenderComponent implements OnInit {
       a11yLabel: 'Delete',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.tasksService.deleteTask(event.meta.task.id).subscribe(() => {
-          this.fetchEvents();
+          this.activeDayIsOpen = false;
+          this.tasksService.getAllTasks();
         });
       },
     },
   ];
 
-  constructor(private tasksService: TasksService) {}
+  constructor(
+    private tasksService: TasksService,
+    private windowRef: WindowRef
+  ) {}
 
   ngOnInit(): void {
     this.fetchEvents();
+    this.events$ = this.tasksService.tasksChanged.pipe(
+      map((tasks: Task[]) => {
+        return tasks.map((task: Task) => {
+          return {
+            title: task.title,
+            start: new Date(task.start_at),
+            color: colors.yellow,
+            actions: this.actions,
+            allDay: true,
+            meta: {
+              task,
+            },
+          };
+        });
+      })
+    );
   }
 
   fetchEvents(): void {

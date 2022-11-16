@@ -78,13 +78,18 @@ export class TaskFormComponent implements OnInit, OnChanges {
           .subscribe(() => {
             this.editMode = false;
             this.formSubmitted.emit();
+            this.tasksService.getAllTasks();
           });
       } else {
-        this.tasksService.createNewTask(
-          form.value.title,
-          form.value.description,
-          form.value.startDate
-        );
+        this.tasksService
+          .createNewTask(
+            form.value.title,
+            form.value.description,
+            form.value.startDate
+          )
+          .subscribe(() => {
+            this.tasksService.getAllTasks();
+          });
       }
       form.reset();
       this.formDirective.resetForm();
