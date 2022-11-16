@@ -1,7 +1,7 @@
 import { Component, Injectable, OnInit, Renderer2 } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { HttpService } from 'src/app/services/http.service';
 import { ScriptService } from 'src/app/services/script.service';
+import { TasksService } from 'src/app/services/tasks.service';
 
 declare const google: any;
 
@@ -13,11 +13,13 @@ declare const google: any;
 })
 export class HeaderComponent implements OnInit {
   googleAuthClient;
+  syncing = false;
+
   constructor(
     public authService: AuthService,
     private renderer: Renderer2,
     private scriptService: ScriptService,
-    private httpService: HttpService
+    private tasksService: TasksService
   ) {}
 
   ngOnInit(): void {
@@ -48,6 +50,14 @@ export class HeaderComponent implements OnInit {
     if (this.googleAuthClient) {
       this.googleAuthClient.requestCode();
     }
+  }
+
+  onClickSyncEvents() {
+    this.syncing = true;
+    this.tasksService.syncEventsAndTasks().subscribe(() => {
+      this.tasksService.getAllTasks();
+      this.syncing = false;
+    });
   }
 
   onLogout() {

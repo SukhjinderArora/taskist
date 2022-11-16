@@ -23,13 +23,6 @@ export class TasksService {
     return tasksObservable;
   }
 
-  getAllTasks_() {
-    return this.http.get<Task[]>('/api/tasks/all').subscribe((tasks) => {
-      this.tasks = tasks;
-      this.tasksChanged.next([...this.tasks]);
-    });
-  }
-
   getTask(taskId: number): Task {
     return this.tasks.find((task) => task.id === taskId);
   }
@@ -52,5 +45,9 @@ export class TasksService {
 
   deleteTask(taskId: number) {
     return this.http.delete(`/api/tasks/${taskId}/delete`);
+  }
+
+  syncEventsAndTasks() {
+    return this.http.get<Task>('/api/tasks/sync');
   }
 }

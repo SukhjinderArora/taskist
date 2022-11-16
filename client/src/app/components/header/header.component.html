@@ -10,6 +10,14 @@
     <div class="btn-group" *ngIf="this.authService.authUser">
       <button
         mat-raised-button
+        style="display: flex; align-items: center"
+        (click)="onClickSyncEvents()"
+      >
+        <mat-icon *ngIf="syncing">sync</mat-icon>
+        <span> Sync Calendar </span>
+      </button>
+      <button
+        mat-raised-button
         color="accent"
         style="display: flex; align-items: center"
         (click)="onClickOpenAuthWindow()"
