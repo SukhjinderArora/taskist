@@ -1,4 +1,6 @@
 import { Component, Injectable, OnInit, Renderer2 } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { AuthService } from 'src/app/services/auth.service';
 import { ScriptService } from 'src/app/services/script.service';
 import { TasksService } from 'src/app/services/tasks.service';
@@ -16,8 +18,9 @@ export class HeaderComponent implements OnInit {
   syncing = false;
 
   constructor(
-    public authService: AuthService,
     private renderer: Renderer2,
+    private _snackBar: MatSnackBar,
+    public authService: AuthService,
     private scriptService: ScriptService,
     private tasksService: TasksService
   ) {}
@@ -57,6 +60,7 @@ export class HeaderComponent implements OnInit {
     this.tasksService.syncEventsAndTasks().subscribe(() => {
       this.tasksService.getAllTasks();
       this.syncing = false;
+      this._snackBar.open('Events synced successfully', 'Dismiss');
     });
   }
 

@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { MaterialModule } from './modules/material.module';
 import { AppRoutingModule } from './modules/app-routing.module';
@@ -42,6 +43,7 @@ import { CalendarHeaderComponent } from './pages/home/tasks-calender/calendar-he
     ReactiveFormsModule,
     MatIconModule,
     MatTabsModule,
+    MatSnackBarModule,
     MaterialModule,
     AppRoutingModule,
     CalendarModule.forRoot({

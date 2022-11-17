@@ -6,6 +6,7 @@ import {
   EventEmitter,
   ChangeDetectorRef,
 } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { map } from 'rxjs/operators';
 import {
   CalendarEvent,
@@ -81,12 +82,14 @@ export class TasksCalenderComponent implements OnInit {
         this.tasksService.deleteTask(event.meta.task.id).subscribe(() => {
           this.activeDayIsOpen = false;
           this.tasksService.getAllTasks();
+          this._snackBar.open('Task deleted successfully', 'Dismiss');
         });
       },
     },
   ];
 
   constructor(
+    private _snackBar: MatSnackBar,
     private tasksService: TasksService,
     private windowRef: WindowRef
   ) {}

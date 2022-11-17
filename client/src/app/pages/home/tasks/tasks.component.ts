@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Task } from 'src/app/models/task.model';
 import { TasksService } from 'src/app/services/tasks.service';
@@ -14,6 +15,7 @@ export class TasksComponent implements OnInit {
   @Output() taskSelected = new EventEmitter<number>();
 
   constructor(
+    private _snackBar: MatSnackBar,
     public tasksService: TasksService,
     private windowRef: WindowRef
   ) {}
@@ -33,6 +35,7 @@ export class TasksComponent implements OnInit {
   onDeleteTask(taskId) {
     this.tasksService.deleteTask(taskId).subscribe(() => {
       this.tasksService.getAllTasks();
+      this._snackBar.open('Task deleted successfully', 'Dismiss');
     });
   }
 }

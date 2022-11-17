@@ -15,6 +15,7 @@ import {
   FormGroupDirective,
   Validators,
 } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { TasksService } from 'src/app/services/tasks.service';
 
@@ -33,6 +34,7 @@ export class TaskFormComponent implements OnInit, OnChanges {
 
   constructor(
     private tasksService: TasksService,
+    private _snackBar: MatSnackBar,
     private cd: ChangeDetectorRef
   ) {}
 
@@ -90,6 +92,7 @@ export class TaskFormComponent implements OnInit, OnChanges {
             this.editMode = false;
             this.formSubmitted.emit();
             this.tasksService.getAllTasks();
+            this._snackBar.open('Task updated successfully', 'Dismiss');
           });
       } else {
         this.tasksService
@@ -100,6 +103,7 @@ export class TaskFormComponent implements OnInit, OnChanges {
           )
           .subscribe(() => {
             this.tasksService.getAllTasks();
+            this._snackBar.open('Task added successfully', 'Dismiss');
           });
       }
       this.formNg.resetForm();
