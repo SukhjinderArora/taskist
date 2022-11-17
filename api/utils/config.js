@@ -1,9 +1,7 @@
 require("dotenv").config();
 
-const DATABASE_URL =
-  "postgres://taskist:VDWvjywZjCsjRmzyTM08UFkZfCGJp5cz@dpg-cdq6fscgqg47to0oqljg-a.singapore-postgres.render.com/taskist?ssl=true";
-
 const {
+  DATABASE_URL,
   NODE_ENV,
   PORT,
   GOOGLE_CLIENT_ID,
