@@ -138,6 +138,10 @@ const syncEventsWithTasks = async (req, res, next) => {
         ).toISOString(),
       }));
 
+      if (eventsItems.length <= 0) {
+        return res.status(200).json([]);
+      }
+
       const upsertedEvents = await knex("tasks")
         .insert(eventsItems)
         .onConflict("event_id")
