@@ -8,7 +8,7 @@ Taskist - A Task Manager Application Built Using Angular, NodeJS, Express & Post
   This is a Task Manager app built using <strong>Angular<em></em></strong> as the front end, <strong>NodeJS<em></em></strong> and <strong>Express<em></em></strong> as the back end, and <strong>PostgreSQL<em></em></strong> as the database.
 </p>
 
-**_Take a look at the live version here:_** https://taskist-web.herokuapp.com/
+**_Take a look at the live version here:_** https://taskist.onrender.com/
 
 ## Features
 
@@ -30,7 +30,7 @@ Taskist - A Task Manager Application Built Using Angular, NodeJS, Express & Post
 
 # Live Demo
 
-**_Take a look on the live version here:_** https://taskist-web.herokuapp.com/
+**_Take a look on the live version here:_** https://taskist.onrender.com/
 
 # Author
 
