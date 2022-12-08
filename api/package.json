@@ -8,7 +8,7 @@
     "dev": "nodemon index.js",
     "seed": "knex migrate:latest",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm install && cd ../client && npm run build && rm -rf ../api/public && mv ./dist ../api/public"
+    "build": "npm install && cd ../client && npm install && npm run build && rm -rf ../api/public && mv ./dist ../api/public"
   },
   "author": "Sukhjinder Arora",
   "license": "MIT",
